@@ -1,3 +1,9 @@
+import {getShopByShopifyDomain} from '@functions/repositories/shopRepository';
+import {handleInstall} from '@functions/services/installationService';
+import {registerWebhook} from '@functions/services/webhookService';
+import {initShopify} from '@functions/services/shopifyService';
+import {processAndSaveOrder} from '@functions/services/notificationService';
+
 /**
  * Background handler for PubSub messages
  *
@@ -13,19 +19,34 @@
  */
 export default async function subscribeBackgroundHandling(event) {
   try {
-    const data = event.data.message.json;
-    const {type, shopId} = data;
+    const message = event.data.message.data
+      ? Buffer.from(event.data.message.data, 'base64').toString()
+      : '{}';
+    const payload = JSON.parse(message);
+    const {type, shopDomain, orderData} = payload;
+
+    const shopDoc = await getShopByShopifyDomain(shopDomain);
+    if (!shopDoc) {
+      console.error('Shop not found!');
+      return;
+    }
 
     switch (type) {
-      case 'afterInstall':
-        // TODO: Add your post-installation logic here
-        // Example: sync initial data, register webhooks, etc.
-        console.log('Processing afterInstall for shop:', shopId);
+      case 'SYNC_INITIAL_DATA':
+        await handleInstall(shopDoc);
+        await registerWebhook(shopDoc);
         break;
+
+      case 'PROCESS_WEBHOOK_ORDER':
+        const shopify = initShopify(shopDoc);
+        await processAndSaveOrder({shopify, shopDomain, orderData});
+        break;
+
       default:
-        console.log('Unknown background task type:', type);
+        console.log('Unknown shop type ', type);
     }
   } catch (e) {
     console.error('Background handling error:', e);
+    throw e;
   }
 }

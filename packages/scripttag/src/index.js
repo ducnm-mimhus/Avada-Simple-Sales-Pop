@@ -1,5 +1,26 @@
-import {isEmpty} from '@avada/utils/lib/isEmpty';
+import {fetchAndEnqueue} from './services/notificationService';
+import {processQueue} from './services/displayService';
+import {delay} from './utils/delay';
+import {shouldShowPopup} from './utils/url';
+import {state} from './utils/state';
 
-console.log('Is empty', isEmpty({}));
+async function start() {
+  console.log('Avada Sales Pop: Initializing...');
+  await fetchAndEnqueue();
 
-console.log('This is the script tag');
+  if (!state.settings) {
+    console.log('No settings found. Stop.');
+    return;
+  }
+
+  if (!shouldShowPopup(state.settings)) {
+    console.log('Page excluded.');
+    return;
+  }
+
+  await delay(state.settings.firstDelay);
+  processQueue();
+  setInterval(fetchAndEnqueue, 30 * 1000);
+}
+
+start();

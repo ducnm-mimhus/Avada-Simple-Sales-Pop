@@ -11,12 +11,13 @@ const APP_PORT = 0;
 const localhost = '127.0.0.1';
 const isProduction = process.env.NODE_ENV === 'production';
 const environmentPath = !process.env.ENVIRONMENT ? '.env' : `.env.${process.env.ENVIRONMENT}`;
-require('dotenv').config({path: path.resolve(__dirname, environmentPath)}); // read file .env.development
+require('dotenv').config({path: path.resolve(__dirname, environmentPath)});
 const host = process.env.HOST ? process.env.HOST.replace(/https?:\/\//, '') : localhost;
 const isEmbed = process.env.IS_EMBEDDED_APP === 'yes';
 const templateOutFile = isEmbed ? 'embed-template.html' : 'standalone.html';
-const fePort = process.env.FRONTEND_PORT || 3000 + APP_PORT; // vite server port
-const bePort = process.env.BACKEND_PORT || 5000 + APP_PORT; // hosting/API port
+const fePort = process.env.FRONTEND_PORT || 3000 + APP_PORT;
+// const bePort = process.env.BACKEND_PORT || 5005 + APP_PORT; // hosting/API port
+const bePort = 5005;
 
 const [sslKey, sslCert] = ['ssl.key', 'ssl.crt'].map(file => {
   try {
@@ -52,14 +53,13 @@ if (!isProduction && shopifyApiKey) {
   try {
     const baseUrl = process.env.HOST.replace('https://', '');
 
-    // Update functions .env file
     updateEnvFile('../functions/.env', {
       APP_BASE_URL: baseUrl,
       SHOPIFY_API_KEY: shopifyApiKey,
       SHOPIFY_SECRET: shopifyApiSecret
     });
 
-    updateThemeAppExtFile('../../extensions/theme-extension/assets/avada-embed.js');
+    updateThemeAppExtFile('../../extensions/theme-extension-2/assets/avada-embed.js');
 
     updateEnvFile('.env.development', {
       VITE_SHOPIFY_API_KEY: shopifyApiKey

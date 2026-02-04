@@ -50,5 +50,5 @@ auth.onAuthStateChanged(async user => {
   }
 });
 
-// Register a service worker for PWA application
+// Register a services worker for PWA application
 serviceWorker.register();

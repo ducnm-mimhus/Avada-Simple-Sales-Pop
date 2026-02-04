@@ -24,7 +24,7 @@ export async function getShopById(id) {
  */
 export async function getShopByShopifyDomain(shopifyDomain) {
   try {
-    return await getShopByField(shopifyDomain, 'shopifyDomain');
+    return await getShopByField(shopifyDomain, 'domain');
   } catch (error) {
     console.error('Error getting shop by Shopify domain:', error);
     return null;
@@ -50,4 +50,17 @@ export async function getShopByField(value, field = 'shopifyDomain') {
 
   const doc = docs.docs[0];
   return {id: doc.id, ...formatDateFields(doc.data())};
+}
+
+/**
+ *
+ * @param shopId
+ * @param data
+ * @returns {Promise<FirebaseFirestore.WriteResult>}
+ */
+export async function updateShopById(shopId, data) {
+  return collection.doc(shopId).update({
+    ...data,
+    updatedAt: new Date()
+  });
 }

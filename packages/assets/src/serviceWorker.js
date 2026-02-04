@@ -1,5 +1,5 @@
 /**
- * Register a service worker for cache everything and load an application faster.
+ * Register a services worker for cache everything and load an application faster.
  * It only works on production mode
  * @link https://developers.google.com/web/tools/workbox/guides/codelabs/webpack
  */

@@ -62,7 +62,7 @@ npm run dev
 ```
 
 ```bash
-GOOGLE_APPLICATION_CREDENTIALS=<Path to service-account.json> firebase serve
+GOOGLE_APPLICATION_CREDENTIALS=<Path to services-account.json> firebase serve
 ```
 
 ## Lint
@@ -108,7 +108,7 @@ Click `Generate new private key`
 Use command to export global environment
 
 ```bash
-export GOOGLE_APPLICATION_CREDENTIALS=<Path to service-account.json>
+export GOOGLE_APPLICATION_CREDENTIALS=<Path to services-account.json>
 ```
 
 ### I got message `PERMISSION_DENIED: Missing or insufficient permissions`

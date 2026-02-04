@@ -156,7 +156,7 @@ mcp__playwright__browser_navigate({ url: "https://admin.shopify.com/store/{store
 
 // 2. Navigate to specific settings
 // - Apps and sales channels: /settings/apps
-// - Notifications: /settings/notifications
+// - Notifications.js: /settings/notifications
 // - Checkout: /settings/checkout
 // - Markets: /settings/markets
 ```

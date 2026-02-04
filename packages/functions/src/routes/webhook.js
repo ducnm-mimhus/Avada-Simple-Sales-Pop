@@ -1,6 +1,6 @@
 import Router from 'koa-router';
-import * as webhookController from '../controllers/webhook/webhookController';
-import verifyWebhook from '../middleware/webhookKoaMiddleware';
+import * as webhookController from '@functions/controllers/webhook/webhookController';
+import verifyWebhook from '@functions/middleware/webhookKoaMiddleware';
 
 const router = new Router({
   prefix: '/webhook'
@@ -9,7 +9,7 @@ const router = new Router({
 router.use(verifyWebhook);
 
 // Add your webhook routes here
-// Example: router.post('/order/new', webhookController.listenNewOrder);
+router.post('/orders/create', webhookController.listenNewOrder);
 router.post('/app/uninstalled', webhookController.appUninstalled);
 
 export default router;

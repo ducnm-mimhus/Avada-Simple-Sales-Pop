@@ -1,41 +1,39 @@
-import React, {useContext, useState} from 'react';
+import React, {useState} from 'react';
 import {BlockStack, Button, Card, InlineStack, Layout, Page, Text} from '@shopify/polaris';
-import {MaxModalContext} from '@assets/contexts/maxModalContext';
 
 /**
- * Render a home page for overview
  *
- * @return {React.ReactElement}
+ * @returns {Element}
  * @constructor
  */
 export default function Home() {
   const [enabled, setEnabled] = useState(false);
-  const {openFullscreen} = useContext(MaxModalContext);
-
+  const handleToggle = () => {
+    setEnabled(pre => !pre);
+  };
   return (
-    <Page title="Dashboard 1234">
+    <Page title="Home">
       <Layout>
         <Layout.Section>
-          <BlockStack gap="400">
+          <BlockStack gap="500">
             <Card>
-              <InlineStack blockAlign="center">
-                <Text as="span">Our app is {enabled ? 'enabled' : 'disabled'} on your store</Text>
-                <div style={{flex: 1}} />
-                <Button
-                  variant={enabled ? 'secondary' : 'primary'}
-                  onClick={() => setEnabled(prev => !prev)}
-                >
-                  {enabled ? 'Disable' : 'Enable'}
-                </Button>
-              </InlineStack>
-            </Card>
-            <Card>
-              <InlineStack gap="200" blockAlign="center">
-                <Text as="span">Fullscreen</Text>
-                <Button onClick={() => openFullscreen('/samples')}>Samples</Button>
-                <Button onClick={() => openFullscreen('/settings')}>Settings</Button>
-                <Button url="/fullscreen-page-a">Fullscreen page a</Button>
-              </InlineStack>
+              <BlockStack gap={'400'}>
+                <InlineStack align="space-between" blockAlign="center">
+                  <Text as="span">
+                    App status is{' '}
+                    <Text as="span" fontWeight="bold">
+                      {enabled ? 'enable' : 'disable'}
+                    </Text>
+                  </Text>
+                  <Button
+                    variant="primary"
+                    tone={enabled ? 'critical' : 'success'}
+                    onClick={handleToggle}
+                  >
+                    {enabled ? 'Disable' : 'Enable'}
+                  </Button>
+                </InlineStack>
+              </BlockStack>
             </Card>
           </BlockStack>
         </Layout.Section>

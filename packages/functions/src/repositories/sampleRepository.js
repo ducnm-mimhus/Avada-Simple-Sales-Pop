@@ -1,12 +1,12 @@
-import {Firestore, FieldValue} from '@google-cloud/firestore';
+import {FieldValue, Firestore} from '@google-cloud/firestore';
 import {
-  prepareDoc,
-  paginateQuery,
-  getOrderBy,
-  getByIds,
   batchCreate,
+  batchDelete,
   batchUpdate,
-  batchDelete
+  getByIds,
+  getOrderBy,
+  paginateQuery,
+  prepareDoc
 } from './helper';
 
 /**
@@ -61,7 +61,7 @@ export async function getSampleById(id, shopId) {
 
 /**
  * Get paginated list with filtering and sorting
- * Uses paginateQuery helper for cursor-based pagination
+ * Uses paginateQuery utils for cursor-based pagination
  *
  * @param {Object} params
  * @param {string} params.shopId - Shop ID (required)

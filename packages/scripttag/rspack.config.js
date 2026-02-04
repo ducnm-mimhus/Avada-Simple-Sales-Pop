@@ -47,7 +47,7 @@ module.exports = {
   experiments: {asyncWebAssembly: true, topLevelAwait: true},
   output: {
     path: path.resolve(__dirname, '../../static/scripttag'),
-    filename: 'avada-sale-pop.min.js',
+    filename: 'avada-sales-pop.min.js',
     publicPath: jsPath,
     chunkFilename: '[name].[contenthash].bundle.js',
     assetModuleFilename: '[name].[hash][ext]',
@@ -61,10 +61,7 @@ module.exports = {
       'react-dom': 'preact/compat',
       '@assets': path.resolve(__dirname, '../assets/src')
     },
-    modules: [
-      'node_modules',
-      path.resolve(__dirname, '../assets/node_modules')
-    ]
+    modules: ['node_modules', path.resolve(__dirname, '../assets/node_modules')]
   },
   module: {
     rules: [

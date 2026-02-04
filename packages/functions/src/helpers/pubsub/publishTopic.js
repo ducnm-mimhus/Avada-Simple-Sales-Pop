@@ -13,7 +13,7 @@ const getTopic = name => {
   return topicCache.get(name);
 };
 
-const publishTopic = async (name, data) => {
+export const publishTopic = async (name, data) => {
   const topic = getTopic(name);
   const message = Buffer.from(JSON.stringify(data));
   await topic.publish(message);
@@ -31,5 +31,3 @@ export const publishTopicAsync = (name, data) => {
     console.error(`Failed to publish to topic ${name}:`, err);
   });
 };
-
-export default publishTopic;

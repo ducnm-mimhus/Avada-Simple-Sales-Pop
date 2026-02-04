@@ -3,7 +3,7 @@ import {formatDateFields} from '@avada/firestore-utils';
 import {FieldPath} from '@google-cloud/firestore/build/src';
 
 /**
- * @fileoverview Firestore repository helper functions.
+ * @fileoverview Firestore repository utils functions.
  *
  * This module provides common utilities for Firestore operations:
  * - Document preparation and formatting
@@ -13,7 +13,7 @@ import {FieldPath} from '@google-cloud/firestore/build/src';
  *
  * @example
  * // Using paginateQuery in a repository
- * import {paginateQuery, getOrderBy} from './helper';
+ * import {paginateQuery, getOrderBy} from './utils';
  *
  * export async function getItems({shopId, query}) {
  *   let queriedRef = collection.where('shopId', '==', shopId);

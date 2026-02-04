@@ -11,6 +11,7 @@
     "start": "http-server"
   },
   "dependencies": {
+    "moment": "^2.30.1",
     "preact": "^10.3.2",
     "preact-context": "^1.1.4",
     "preact-html-converter": "^0.4.2"

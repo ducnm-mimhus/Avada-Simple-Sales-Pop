@@ -50,7 +50,8 @@
     "@avada/console": "1.0.0",
     "@playwright/mcp": "^0.0.54",
     "@shopify/cli": "3.88.1",
-    "concurrently": "^7.6.0"
+    "concurrently": "^7.6.0",
+    "crypto-js": "^4.2.0"
   },
   "packageManager": "yarn@4.12.0"
 }

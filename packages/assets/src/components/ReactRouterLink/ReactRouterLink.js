@@ -1,46 +1,46 @@
-import React from 'react';
+import React, {forwardRef} from 'react';
 import {Link} from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 /**
  * Render a link with react-router-dom
+ * Wrapped with forwardRef to fix "Function components cannot be given refs" warning
  *
- * @link https://github.com/Shopify/polaris-react/issues/2575#issuecomment-574269370
- * @param {React.ReactElement} children
- * @param {string} url
- * @param {object} rest
+ * @param {object} props
+ * @param {any} ref
  * @return {React.ReactElement}
- * @constructor
  */
-export default function ReactRouterLink({children, url = '', ...rest}) {
-  // Use an regular a tag for external and download links
+const ReactRouterLink = forwardRef(function ReactRouterLink({children, url = '', ...rest}, ref) {
   if (isOutboundLink(url) || rest.download || rest.external) {
     if (rest.external) {
-      delete rest.external;
+      const {external, ...cleanRest} = rest;
       return (
-        <a href={url} {...rest} target="_blank" rel="noreferrer noopener">
+        <a ref={ref} href={url} target="_blank" rel="noreferrer noopener" {...cleanRest}>
           {children}
         </a>
       );
     }
+
     return (
-      <a href={url} {...rest}>
+      <a ref={ref} href={url} {...rest}>
         {children}
       </a>
     );
   }
 
   return (
-    <Link to={url} {...rest}>
+    <Link to={url} ref={ref} {...rest}>
       {children}
     </Link>
   );
-}
+});
 
 ReactRouterLink.propTypes = {
   children: PropTypes.node,
   url: PropTypes.string.isRequired
 };
+
+export default ReactRouterLink;
 
 /**
  * Check is outbound link or not

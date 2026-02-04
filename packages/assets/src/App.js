@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import AppBridgeProvider from '@assets/components/AppBridgeProvider';
 import {isEmbeddedApp} from '@assets/config/app';
 import AppEmbeddedLayout from '@assets/layouts/EmbeddedLayout/AppEmbeddedLayout';
-import AppFullLayout from '@assets/layouts/FullLayout/AppFullLayout';
+// import AppLayout from '@assets/layouts/AppLayout/AppLayout';
 import {MaxModalProvider} from '@assets/contexts/maxModalContext';
 
 /**
@@ -41,7 +41,7 @@ const MainLayout = ({children}) => {
       <AppEmbeddedLayout>{children}</AppEmbeddedLayout>
     </AppBridgeProvider>
   ) : (
-    <AppFullLayout>{children}</AppFullLayout>
+    <AppEmbeddedLayout>{children}</AppEmbeddedLayout>
   );
 };
 

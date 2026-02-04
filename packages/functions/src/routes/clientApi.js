@@ -5,8 +5,7 @@ const router = new Router({
   prefix: '/clientApi'
 });
 
-// Add your client API routes here
-// Example: router.get('/data', clientApiController.getData);
+router.get('/notifications', clientApiController.getClientData);
 router.get('/health', clientApiController.health);
 
 export default router;

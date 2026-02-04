@@ -100,7 +100,7 @@ function process(data) {
 // BEFORE - Duplicated in multiple files
 const numericId = gid.replace(/.*\//, '');
 
-// AFTER - Extracted to helper
+// AFTER - Extracted to utils
 // helpers/utils.js
 export function extractNumericId(gid) {
   return gid.replace(/.*\//, '');

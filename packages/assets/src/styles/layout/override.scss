@@ -1,0 +1,47 @@
+/* src/styles/layout/override.scss */
+
+/* 1. Sidebar trắng */
+.Polaris-Navigation {
+  background-color: #ffffff !important;
+  border-right: 1px solid #e1e3e5; /* Thêm cái này để ngăn cách sidebar với nội dung */
+}
+
+/* 2. Header trắng */
+.Polaris-TopBar {
+  background-color: #ffffff !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid #e1e3e5;
+}
+
+/* 3. SỬA LỖI 1: Vùng chứa Logo */
+.Polaris-TopBar__LogoContainer {
+  background-color: #ffffff !important;
+  border-bottom: none !important; /* <-- XÓA GẠCH NGANG Ở ĐÂY */
+  width: 240px !important;
+}
+
+/* 4. Ẩn nút toggle menu trên Desktop */
+@media (min-width: 769px) {
+  .Polaris-TopBar__NavigationIcon {
+    display: none !important;
+  }
+}
+
+/* 5. SỬA LỖI 2: Ép màu cho Tab đang được chọn (Active) */
+/* Polaris thêm class 'Polaris-Navigation__Item--selected' khi active */
+.Polaris-Navigation__Item--selected {
+  /* Màu nền khi chọn (Màu xám xanh rất nhạt chuẩn admin) */
+  background-color: #f1f2f3 !important;
+
+  /* Màu chữ và Icon khi chọn (Màu đen đậm) */
+  .Polaris-Navigation__Text,
+  .Polaris-Icon {
+    color: #202223 !important;
+    font-weight: 600 !important;
+  }
+}
+
+/* Tùy chỉnh thêm: Hover vào item thì hiện màu nhẹ */
+.Polaris-Navigation__Item:hover:not(.Polaris-Navigation__Item--selected) {
+  background-color: #fafbfb !important;
+}
