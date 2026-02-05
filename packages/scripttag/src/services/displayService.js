@@ -61,7 +61,7 @@ export async function processQueue() {
 
       for (let i = 0; i < waitTime; i++) {
         if (state.queue.length > 0) {
-          console.log('Interrupt: Đơn thật mới về! Hủy chờ.');
+          console.log('Interrupt: New real order!');
           break;
         }
         await delay(1);

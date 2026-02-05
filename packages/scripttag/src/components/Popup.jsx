@@ -2,6 +2,7 @@ import {useEffect, useState} from 'preact/hooks';
 import './Popup.css';
 import {timeAgo} from '../utils/time';
 import {truncate} from '../utils/truncate';
+import {slugify} from '../utils/slugify';
 
 /**
  *
@@ -32,8 +33,12 @@ export const Popup = ({notification, setting}) => {
     transition: 'opacity 0.5s ease-in-out'
   };
 
+  const handleClick = () => {
+    window.location.href = `/products/${slugify(notification.productName)}`;
+  };
+
   return (
-    <div className="avada-sales-popup" style={positionStyle}>
+    <div className="avada-sales-popup" style={positionStyle} onClick={handleClick}>
       <img
         src={notification.productImage}
         className="avada-popup-img"
