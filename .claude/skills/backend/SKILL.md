@@ -234,7 +234,7 @@ exports.updateTier = functions.pubsub
     await tierService.recalculate(order.customerId);
   });
 
-// Consumer 3: Send notification
+// Consumer 3: Send notifications
 exports.sendNotification = functions.pubsub
   .topic('order-created')
   .onPublish(async (message) => {

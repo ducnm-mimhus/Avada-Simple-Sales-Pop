@@ -56,7 +56,7 @@ export default function DisplayTab({settings, onChange}) {
                 0,
                 60,
                 'second(s)',
-                'The delay time before the first notification.',
+                'The delay time before the first notifications.',
                 settings,
                 onChange
               )}

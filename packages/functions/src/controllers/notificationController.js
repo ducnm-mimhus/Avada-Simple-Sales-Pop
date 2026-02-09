@@ -20,7 +20,7 @@ async function getNotifications(ctx) {
       });
     }
 
-    const notifications = await getListNotifications(shopId);
+    const notifications = await getListNotifications({shopId});
     ctx.status = 200;
     return (ctx.body = {
       status: 'Successfully',
@@ -43,7 +43,7 @@ async function deleteBulkNotifications(ctx) {
       ctx.status = 400;
       ctx.body = {
         success: false,
-        message: 'No notification IDs provided'
+        message: 'No notifications IDs provided'
       };
       return;
     }

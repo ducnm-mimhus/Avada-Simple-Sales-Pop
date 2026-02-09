@@ -73,7 +73,7 @@ export default function TriggersTab({settings, onChange}) {
                 10,
                 300,
                 'second(s)',
-                'To ensure authenticity, the app will wait a random amount of time (between 5 seconds and this value) before showing the next looped notification.',
+                'To ensure authenticity, the app will wait a random amount of time (between 5 seconds and this value) before showing the next looped notifications.',
                 settings,
                 onChange
               )}

@@ -25,13 +25,14 @@ export async function getClientData(ctx) {
     if (!shopDomain) {
       return (ctx.body = {success: false, message: 'Missing Shopify Domain!'});
     }
+    ctx.set('Cache-Control', 'public, max-age=0, s-maxage=30');
     const settingData = await getSettingByShopId(shopDomain);
     const finalSetting = settingData ? {...INITIAL_SETTINGS, ...settingData} : INITIAL_SETTINGS;
-    const notificationsData = await getListNotifications(
-      shopDomain,
-      finalSetting.maxPopsDisplay,
-      since
-    );
+    const notificationsData = await getListNotifications({
+      shopId: shopDomain,
+      limit: finalSetting.maxPopsDisplay,
+      since: since
+    });
 
     ctx.status = 200;
     ctx.body = {

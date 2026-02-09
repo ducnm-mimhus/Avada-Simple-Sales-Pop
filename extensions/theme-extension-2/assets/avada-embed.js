@@ -1,5 +1,5 @@
 (function() {
-  const BASE_URL = 'https://rid-governance-strengthen-guys.trycloudflare.com/scripttag';
+  const BASE_URL = 'https://affair-platform-starring-lap.trycloudflare.com/scripttag';
 
   const scriptElement = document.createElement('script');
   [0];

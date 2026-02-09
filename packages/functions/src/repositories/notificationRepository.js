@@ -1,11 +1,11 @@
 const {db} = require('../config/firebaseConfig');
-const NOTIFICATION_COLLECTION = db.collection('notifications');
+const collection = db.collection('notifications');
 const DEFAULT_IMAGE =
   'https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png';
 
-async function getListNotifications(shopId, limit = null, since = null) {
+export async function getListNotifications({shopId, limit = null, since = null}) {
   try {
-    let query = NOTIFICATION_COLLECTION.where('shopId', '==', shopId).orderBy('timestamp', 'desc');
+    let query = collection.where('shopId', '==', shopId).orderBy('timestamp', 'desc');
     if (since) {
       const sinceDate = new Date(since);
       if (!isNaN(sinceDate.getTime())) {
@@ -35,7 +35,14 @@ async function getListNotifications(shopId, limit = null, since = null) {
   }
 }
 
-async function syncManyOrder({orders = [], shopDomain, productsMap = {}}) {
+/**
+ *
+ * @param orders
+ * @param shopDomain
+ * @param productsMap
+ * @returns {Promise<FirebaseFirestore.WriteResult[]>}
+ */
+export async function syncManyOrder({orders = [], shopDomain, productsMap = {}}) {
   if (!orders.length) return;
 
   const batch = db.batch();
@@ -46,7 +53,7 @@ async function syncManyOrder({orders = [], shopDomain, productsMap = {}}) {
 
     const firstItem = line_items[0];
     const productId = firstItem.product_id;
-    const docRef = NOTIFICATION_COLLECTION.doc(`${shopDomain}_${id}`);
+    const docRef = collection.doc(`${shopDomain}_${id}`);
 
     const notificationData = {
       shopDomain,
@@ -66,23 +73,32 @@ async function syncManyOrder({orders = [], shopDomain, productsMap = {}}) {
   return batch.commit();
 }
 
-async function syncOneOrder(notificationData, docId) {
+/**
+ *
+ * @param notificationData
+ * @param docId
+ * @returns {Promise<FirebaseFirestore.WriteResult>}
+ */
+export async function syncOneOrder(notificationData, docId) {
   const dataToSave = {
     ...notificationData,
     timestamp: notificationData.timestamp ? new Date(notificationData.timestamp) : new Date(),
     createdAt: new Date()
   };
 
-  return NOTIFICATION_COLLECTION.doc(docId).set(dataToSave, {merge: true});
+  return collection.doc(docId).set(dataToSave, {merge: true});
 }
 
-async function deleteManyNotifications(ids) {
+/**
+ *
+ * @param ids
+ * @returns {Promise<FirebaseFirestore.WriteResult[]>}
+ */
+export async function deleteManyNotifications(ids) {
   const batch = db.batch();
   ids.forEach(id => {
-    const docRef = NOTIFICATION_COLLECTION.doc(id.toString());
+    const docRef = collection.doc(id.toString());
     batch.delete(docRef);
   });
   return batch.commit();
 }
-
-module.exports = {getListNotifications, syncManyOrder, syncOneOrder, deleteManyNotifications};

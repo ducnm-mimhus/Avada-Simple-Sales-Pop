@@ -1,13 +1,13 @@
 const {db} = require('../config/firebaseConfig');
-const SETTING_COLLECTION = db.collection('settings');
+const collection = db.collection('settings');
 
 /**
  *
  * @param shopId
  * @returns {Promise<{[p: string]: FirebaseFirestore.DocumentFieldValue, id: string}|null>}
  */
-async function getSettingByShopId(shopId) {
-  const doc = await SETTING_COLLECTION.doc(shopId).get();
+export async function getSettingByShopId(shopId) {
+  const doc = await collection.doc(shopId).get();
 
   if (!doc.exists) {
     return null;
@@ -21,14 +21,12 @@ async function getSettingByShopId(shopId) {
  * @param setting
  * @returns {Promise<boolean>}
  */
-async function updateSettingByShopId(shopId, setting) {
+export async function updateSettingByShopId(shopId, setting) {
   const dataToSave = {
     shopId,
     ...setting
   };
 
-  await SETTING_COLLECTION.doc(shopId).set(dataToSave, {merge: true});
+  await collection.doc(shopId).set(dataToSave, {merge: true});
   return true;
 }
-
-module.exports = {getSettingByShopId, updateSettingByShopId};

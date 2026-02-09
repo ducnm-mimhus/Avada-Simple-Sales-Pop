@@ -33,8 +33,7 @@ export default async function subscribeBackgroundHandling(event) {
 
     switch (type) {
       case 'SYNC_INITIAL_DATA':
-        await handleInstall(shopDoc);
-        await registerWebhook(shopDoc);
+        await Promise.all([handleInstall(shopDoc), registerWebhook(shopDoc)]);
         break;
 
       case 'PROCESS_WEBHOOK_ORDER':
