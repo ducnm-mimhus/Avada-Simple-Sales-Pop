@@ -1,26 +1,22 @@
-import {fetchAndEnqueue} from './services/notificationService';
-import {processQueue} from './services/displayService';
-import {delay} from './utils/delay';
-import {shouldShowPopup} from './utils/url';
-import {state} from './utils/state';
+import DisplayManager from './managers/DisplayManager';
+import ApiManager from './managers/ApiManager';
+import Helper from './helpers/Helper';
 
-async function start() {
-  console.log('Avada Sales Pop: Initializing...');
-  await fetchAndEnqueue();
+async function main() {
+  const apiManager = new ApiManager();
+  const displayManager = new DisplayManager();
+  const helper = new Helper();
 
-  if (!state.settings) {
-    console.log('No settings found. Stop.');
+  const initialData = await apiManager.getApiData();
+  if (!helper.shouldShowPopup(initialData.setting)) {
     return;
   }
 
-  if (!shouldShowPopup(state.settings)) {
-    console.log('Page excluded.');
-    return;
-  }
-
-  await delay(state.settings.firstDelay);
-  processQueue();
-  setInterval(fetchAndEnqueue, 30 * 1000);
+  displayManager.initialize(initialData);
+  apiManager.startAutoRefresh(
+    newData => displayManager.updateData(newData),
+    () => displayManager.getLatestTimestamp()
+  );
 }
 
-start();
+main();
