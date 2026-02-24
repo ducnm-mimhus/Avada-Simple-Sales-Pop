@@ -9,7 +9,7 @@ import {
   Text,
   TextField
 } from '@shopify/polaris';
-import {renderSlider} from '@assets/pages/Settings/components/RenderSlider';
+import {Slider} from '@assets/pages/Settings/components/Slider';
 
 export default function TriggersTab({settings, onChange}) {
   const options = [
@@ -67,7 +67,7 @@ export default function TriggersTab({settings, onChange}) {
 
           {settings.allowLoop && (
             <FormLayout.Group>
-              {renderSlider(
+              {Slider(
                 'Maximum random interval',
                 'randomGap',
                 10,

@@ -1,6 +1,6 @@
 import {initShopify} from '@functions/services/shopifyService';
 import {INITIAL_SETTINGS} from '../../../INTINAL_SETTING';
-import {syncManyOrder} from '@functions/repositories/notificationRepository';
+import {syncManyOrders} from '@functions/repositories/notificationRepository';
 import {updateSettingByShopId} from '@functions/repositories/settingRepository';
 
 /**
@@ -41,7 +41,7 @@ async function syncInitialOrders(shopify, shopDomain) {
     ];
     const productsMap = await fetchProductsImageMap(shopify, productIds);
 
-    await syncManyOrder({orders, shopDomain, productsMap});
+    await syncManyOrders({orders, shopDomain, productsMap});
   } catch (error) {
     console.error(`[Install] Order Sync Error for ${shopDomain}:`, error);
   }
@@ -69,6 +69,11 @@ async function fetchProductsImageMap(shopify, productIds) {
   return productsMap;
 }
 
+/**
+ *
+ * @param shopDomain
+ * @returns {Promise<boolean>}
+ */
 async function createDefaultSettings(shopDomain) {
   return updateSettingByShopId(shopDomain, INITIAL_SETTINGS);
 }

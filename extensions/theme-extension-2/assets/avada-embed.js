@@ -1,8 +1,8 @@
 (function() {
-  const BASE_URL = 'https://reno-bandwidth-operational-successfully.trycloudflare.com/scripttag';
+  const BASE_URL = 'https://window-digital-surfing-jeff.trycloudflare.com/scripttag';
 
   const scriptElement = document.createElement('script');
-  [0];
+  // [0];
   scriptElement.type = 'text/javascript';
   scriptElement.async = !0;
   scriptElement.src = BASE_URL + `/avada-sales-pop.min.js?v=${new Date().getTime()}`;

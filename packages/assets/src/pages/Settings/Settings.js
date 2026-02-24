@@ -1,27 +1,49 @@
-import React, {useState} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {BlockStack, Box, Card, Layout, Page, SkeletonBodyText, Tabs} from '@shopify/polaris';
-import NotificationPopupPreview from '@assets/pages/Settings/components/NotificationPopupPreview';
-import useSettings from '@assets/hooks/settings/useSetting';
+import useFetchApi from '@assets/hooks/api/useFetchApi';
+import useEditApi from '@assets/hooks/api/useEditApi';
 import useConfirmModal from '@assets/hooks/popup/useConfirmModal';
+import NotificationPopupPreview from '@assets/pages/Settings/components/NotificationPopupPreview';
 import DisplayTab from '@assets/pages/Settings/components/DisplayTab';
 import TriggersTab from '@assets/pages/Settings/components/TriggerTab';
+import {INITIAL_SETTINGS} from '../../../../INTINAL_SETTING';
 
 export default function Settings() {
   const [selectedTab, setSelectedTab] = useState(0);
 
-  const {
+  const {data: fetchedSettings, loading: isFetching, setData: setFetchedSettings} = useFetchApi({
+    url: '/settings',
+    defaultData: INITIAL_SETTINGS
+  });
+
+  const [settings, setSettings] = useState(INITIAL_SETTINGS);
+  const {editing: isSaving, handleEdit} = useEditApi({url: '/settings'});
+
+  useEffect(() => {
+    if (fetchedSettings) setSettings(fetchedSettings);
+  }, [fetchedSettings]);
+
+  const isDirty = useMemo(() => JSON.stringify(settings) !== JSON.stringify(fetchedSettings), [
     settings,
-    isFetching,
-    isSaving,
-    isDirty,
-    updateSetting,
-    saveSettings,
-    undoChanges
-  } = useSettings();
+    fetchedSettings
+  ]);
+
+  const updateSetting = useCallback((key, value) => {
+    setSettings(prev => ({...prev, [key]: value}));
+  }, []);
+
+  const saveSettings = async () => {
+    const success = await handleEdit(settings);
+    if (success) setFetchedSettings(settings);
+    return success;
+  };
+
+  const undoChanges = () => setSettings(fetchedSettings);
 
   const {modal: saveModal, openModal: openSaveModal} = useConfirmModal({
     title: 'Save changes?',
-    confirmAction: saveSettings
+    confirmAction: saveSettings,
+    disabled: isSaving
   });
 
   const {modal: undoModal, openModal: openUndoModal} = useConfirmModal({
@@ -51,6 +73,7 @@ export default function Settings() {
   return (
     <Page
       title="Settings"
+      subtitle="Decide how your notifications will display"
       primaryAction={{
         content: 'Save',
         onAction: openSaveModal,
@@ -75,6 +98,7 @@ export default function Settings() {
         </Layout.Section>
       </Layout>
 
+      {/* Render các Modals */}
       {saveModal}
       {undoModal}
     </Page>

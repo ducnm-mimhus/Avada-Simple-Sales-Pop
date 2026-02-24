@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box} from '@shopify/polaris';
-import NotificationPopup from '@assets/pages/Notifications/components/NotificationPopup';
+import NotificationPopup from '@assets/components/NotificationPopup/NotificationPopup';
 
 export default function NotificationPopupPreview({settings}) {
   const containerStyle = {

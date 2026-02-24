@@ -1,4 +1,3 @@
-import useNotifications from '@assets/hooks/notifications/useNotifications';
 import useConfirmModal from '@assets/hooks/popup/useConfirmModal';
 import {
   BlockStack,
@@ -11,28 +10,47 @@ import {
   ResourceList
 } from '@shopify/polaris';
 import NotificationItem from '@assets/pages/Notifications/components/NotificationItem';
-import React from 'react';
+import React, {useMemo, useState} from 'react';
+import useFetchApi from '@assets/hooks/api/useFetchApi';
+import useDeleteApi from '@assets/hooks/api/useDeleteApi';
 
 export default function Notifications() {
-  const {
-    notifications,
-    loading,
-    deleting,
-    selectedItems,
-    setSelectedItems,
-    sortValue,
-    setSortValue,
-    currentPage,
-    setCurrentPage,
-    totalPages,
-    handleDelete
-  } = useNotifications();
+  const [selectedItems, setSelectedItems] = useState([]);
+  const [sortValue, setSortValue] = useState('DATE_MODIFIED_DESC');
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const {data: notifications, loading, setData: setNotifications} = useFetchApi({
+    url: '/notifications',
+    defaultData: []
+  });
+
+  const {deleting, handleDelete} = useDeleteApi({
+    url: '/notifications',
+    successCallback: () => {
+      setNotifications(prev => prev.filter(item => !selectedItems.includes(item.id)));
+      setSelectedItems([]);
+      setCurrentPage(1);
+    }
+  });
+
+  const sortedData = useMemo(() => {
+    const data = [...notifications];
+    return sortValue === 'DATE_MODIFIED_DESC' ? data : data.reverse();
+  }, [notifications, sortValue]);
+
+  const pagedNotifications = useMemo(() => {
+    const startIndex = (currentPage - 1) * itemsPerPage;
+    return sortedData.slice(startIndex, startIndex + itemsPerPage);
+  }, [sortedData, currentPage]);
+
+  const totalPages = Math.ceil(notifications.length / itemsPerPage);
 
   const {modal: confirmModal, openModal} = useConfirmModal({
     title: `Delete ${selectedItems.length} notifications?`,
     destructive: true,
     loading: deleting,
-    confirmAction: handleDelete
+    confirmAction: () => handleDelete({data: {ids: selectedItems}})
   });
 
   return (
@@ -43,7 +61,7 @@ export default function Notifications() {
             <Card padding="0">
               <ResourceList
                 resourceName={{singular: 'notification', plural: 'notifications'}}
-                items={notifications}
+                items={pagedNotifications}
                 renderItem={item => <NotificationItem item={item} />}
                 selectedItems={selectedItems}
                 onSelectionChange={setSelectedItems}
@@ -60,7 +78,10 @@ export default function Notifications() {
                   {label: 'Newest update', value: 'DATE_MODIFIED_DESC'},
                   {label: 'Oldest update', value: 'DATE_MODIFIED_ASC'}
                 ]}
-                onSortChange={setSortValue}
+                onSortChange={value => {
+                  setSortValue(value);
+                  setCurrentPage(1);
+                }}
                 loading={loading}
                 emptyState={<EmptyStateHeading />}
               />
@@ -83,6 +104,7 @@ export default function Notifications() {
     </Page>
   );
 }
+
 const EmptyStateHeading = () => (
   <EmptyState
     heading="No notifications yet"

@@ -1,7 +1,7 @@
 import React from 'react';
 import {BlockStack, Card, Checkbox, FormLayout, Text} from '@shopify/polaris';
 import DesktopPositionInput from './DesktopPositionInput';
-import {renderSlider} from '@assets/pages/Settings/components/RenderSlider';
+import {Slider} from '@assets/pages/Settings/components/Slider';
 
 // eslint-disable-next-line react/prop-types
 export default function DisplayTab({settings, onChange}) {
@@ -40,7 +40,7 @@ export default function DisplayTab({settings, onChange}) {
           </Text>
           <FormLayout>
             <FormLayout.Group>
-              {renderSlider(
+              {Slider(
                 'Display duration',
                 'displayDuration',
                 1,
@@ -50,7 +50,7 @@ export default function DisplayTab({settings, onChange}) {
                 settings,
                 onChange
               )}
-              {renderSlider(
+              {Slider(
                 'Time before the first pop',
                 'firstDelay',
                 0,
@@ -63,7 +63,7 @@ export default function DisplayTab({settings, onChange}) {
             </FormLayout.Group>
 
             <FormLayout.Group>
-              {renderSlider(
+              {Slider(
                 'Gap time between two pops',
                 'popsInterval',
                 0,
@@ -73,7 +73,7 @@ export default function DisplayTab({settings, onChange}) {
                 settings,
                 onChange
               )}
-              {renderSlider(
+              {Slider(
                 'Maximum of popups',
                 'maxPopsDisplay',
                 1,

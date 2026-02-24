@@ -1,18 +1,20 @@
 import App from 'koa';
-import * as errorService from '../services/errorService';
 import router from '../routes/clientApi';
 import cors from 'koa2-cors';
 
-// Initialize all demand configuration for an application
 const clientApi = new App();
+
 clientApi.proxy = true;
 
-clientApi.use(cors());
-// Register all routes for the application
-clientApi.use(router.allowedMethods());
-clientApi.use(router.routes());
+clientApi.use(async (ctx, next) => {
+  if (ctx.req.body && !ctx.request.body) {
+    ctx.request.body = ctx.req.body;
+  }
+  await next();
+});
 
-// Handling all errors
-clientApi.on('error', errorService.handleError);
+clientApi.use(cors());
+clientApi.use(router.routes());
+clientApi.use(router.allowedMethods());
 
 export default clientApi;

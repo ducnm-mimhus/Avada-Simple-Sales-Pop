@@ -1,15 +1,15 @@
 import {h, render} from 'preact';
 import {insertAfter} from '../helpers/insertHelpers';
 import {Popup} from '../components/Popup';
-import Helper from '../helpers/Helper';
+import {delay} from '../helpers/helper';
 
 export default class DisplayManager {
-  constructor() {
+  constructor(apiManager) {
     this.liveQueue = [];
     this.inventory = [];
     this.setting = {};
     this.container = null;
-    this.helper = new Helper();
+    this.apiManager = apiManager;
   }
 
   /**
@@ -25,7 +25,7 @@ export default class DisplayManager {
     this.container = this.insertContainer();
 
     if (this.inventory.length > 0 || this.liveQueue.length > 0) {
-      await this.helper.delay(this.setting.firstDelay || 0);
+      await delay(this.setting.firstDelay);
       this.startDisplayLoop();
     }
   }
@@ -63,14 +63,14 @@ export default class DisplayManager {
     while (true) {
       const nextItem = this.getNextNotification();
       if (!nextItem) {
-        await this.helper.delay(1);
+        await delay(1);
         continue;
       }
 
       const {noti, isRealData} = nextItem;
       this.display(noti);
 
-      await this.helper.delay(this.setting.displayDuration || 5);
+      await delay(this.setting.displayDuration);
       this.fadeOut();
       await this.waitForNext(isRealData);
     }
@@ -104,23 +104,25 @@ export default class DisplayManager {
    */
   async waitForNext(isRealData) {
     if (isRealData) {
-      await this.helper.delay(this.setting.popsInterval || 3);
+      await delay(this.setting.popsInterval || 3);
     } else {
       const minGap = 5;
       const maxGap = this.setting.randomGap || 10;
       const waitTime = Math.floor(Math.random() * (maxGap - minGap + 1)) + minGap;
-
-      console.log(`Waiting loop gap: ${waitTime}s...`);
-      for (let i = 0; i < waitTime; i++) {
-        if (this.liveQueue.length > 0) break;
-        await this.helper.delay(1);
-      }
+      await delay(waitTime);
     }
   }
 
   display(notification) {
-    if (!this.container) return;
-    render(<Popup notification={notification} setting={this.setting} />, this.container);
+    render(
+      <Popup
+        notification={notification}
+        setting={this.setting}
+        onItemClick={() => this.apiManager.recordEvent('Clicks')}
+      />,
+      this.container
+    );
+    this.apiManager.recordEvent('Impressions');
   }
 
   fadeOut() {

@@ -1,6 +1,6 @@
 import {useEffect, useState} from 'preact/hooks';
 import './Popup.css';
-import Helper from '../helpers/Helper';
+import {delay, slugify, timeAgo, truncate} from '../helpers/helper';
 
 /**
  *
@@ -9,17 +9,16 @@ import Helper from '../helpers/Helper';
  * @returns {Element}
  * @constructor
  */
-export const Popup = ({notification, setting}) => {
+export const Popup = ({notification, setting, onItemClick}) => {
   const [isVisible, setIsVisible] = useState(false);
-  const helper = new Helper();
 
   useEffect(() => {
     requestAnimationFrame(() => setIsVisible(true));
   }, []);
 
-  const timeAgoString = helper.timeAgo(notification.timestamp);
+  const timeAgoString = timeAgo(notification.timestamp);
   const productNameDisplay = setting.truncateProductName
-    ? helper.truncate(notification.productName)
+    ? truncate(notification.productName)
     : notification.productName;
 
   const positionStyle = {
@@ -32,8 +31,10 @@ export const Popup = ({notification, setting}) => {
     transition: 'opacity 0.5s ease-in-out'
   };
 
-  const handleClick = () => {
-    window.location.href = `/products/${helper.slugify(notification.productName)}`;
+  const handleClick = async () => {
+    onItemClick(notification.id, notification.productId);
+    await delay(0.2);
+    window.location.href = `/products/${slugify(notification.productName)}`;
   };
 
   return (

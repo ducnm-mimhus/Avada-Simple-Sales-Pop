@@ -9,18 +9,34 @@ export default class ApiManager {
     }
   }
 
+  async recordEvent(type) {
+    try {
+      const url = `${this.host}/clientApi/records`;
+      await makeRequest({
+        url: url,
+        method: 'POST',
+        data: {
+          shopDomain: this.shopDomain,
+          type: type
+        }
+      });
+    } catch (e) {
+      console.error('Failed to record click', e);
+    }
+  }
+
   /**
    *
    * @param since
    * @returns {Promise<{notifications: ([]|*|*[]), setting: (*|{})}|{notifications: *[], setting: {}}>}
    */
-  getApiData = async (since = null) => {
+  async getApiData(since = null) {
     try {
       const params = new URLSearchParams({shopDomain: this.shopDomain});
       if (since) params.append('since', since);
 
       const url = `${this.host}/clientApi/notifications?${params.toString()}`;
-      const response = await makeRequest(url, 'GET');
+      const response = await makeRequest({url: url, method: 'GET'});
 
       return {
         notifications: response?.data?.notifications.reverse() || [],
@@ -30,7 +46,7 @@ export default class ApiManager {
       console.error('[ApiManager] Fetch data failed:', error);
       return {notifications: [], setting: {}};
     }
-  };
+  }
 
   /**
    *

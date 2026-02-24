@@ -1,8 +1,17 @@
-const {db} = require('../config/firebaseConfig');
-const collection = db.collection('notifications');
+import {Firestore} from '@google-cloud/firestore';
+
+const firestore = new Firestore();
+const collection = firestore.collection('notifications');
 const DEFAULT_IMAGE =
   'https://cdn.shopify.com/s/files/1/0533/2089/files/placeholder-images-image_large.png';
 
+/**
+ *
+ * @param shopId
+ * @param limit
+ * @param since
+ * @returns {Promise<(*&{createdAt, id: *, timestamp})[]|*[]>}
+ */
 export async function getListNotifications({shopId, limit = null, since = null}) {
   try {
     let query = collection.where('shopId', '==', shopId).orderBy('timestamp', 'desc');
@@ -42,10 +51,10 @@ export async function getListNotifications({shopId, limit = null, since = null})
  * @param productsMap
  * @returns {Promise<FirebaseFirestore.WriteResult[]>}
  */
-export async function syncManyOrder({orders = [], shopDomain, productsMap = {}}) {
+export async function syncManyOrders({orders = [], shopDomain, productsMap = {}}) {
   if (!orders.length) return;
 
-  const batch = db.batch();
+  const batch = firestore.batch();
 
   orders.forEach(order => {
     const {customer, line_items, id, billing_address, created_at} = order;
@@ -95,7 +104,7 @@ export async function syncOneOrder(notificationData, docId) {
  * @returns {Promise<FirebaseFirestore.WriteResult[]>}
  */
 export async function deleteManyNotifications(ids) {
-  const batch = db.batch();
+  const batch = firestore.batch();
   ids.forEach(id => {
     const docRef = collection.doc(id.toString());
     batch.delete(docRef);

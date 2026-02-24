@@ -1,14 +1,14 @@
 import DisplayManager from './managers/DisplayManager';
 import ApiManager from './managers/ApiManager';
-import Helper from './helpers/Helper';
+import {shouldShowPopup} from './helpers/helper';
 
 async function main() {
   const apiManager = new ApiManager();
-  const displayManager = new DisplayManager();
-  const helper = new Helper();
+  const displayManager = new DisplayManager(apiManager);
 
   const initialData = await apiManager.getApiData();
-  if (!helper.shouldShowPopup(initialData.setting)) {
+  console.log(initialData.setting);
+  if (!shouldShowPopup(initialData.setting)) {
     return;
   }
 

@@ -2,6 +2,17 @@ import React from 'react';
 import './NoticationPopup.scss';
 import {truncate} from '@assets/pages/Notifications/utils/truncate';
 
+/**
+ *
+ * @param settings
+ * @param productName
+ * @param customerName
+ * @param location
+ * @param time
+ * @param productImage
+ * @returns {Element}
+ * @constructor
+ */
 const NotificationPopup = ({
   settings = {},
   productName = '',

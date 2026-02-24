@@ -1,5 +1,7 @@
-const {db} = require('../config/firebaseConfig');
-const collection = db.collection('settings');
+import {Firestore} from '@google-cloud/firestore';
+
+const firestore = new Firestore();
+const collection = firestore.collection('settings');
 
 /**
  *

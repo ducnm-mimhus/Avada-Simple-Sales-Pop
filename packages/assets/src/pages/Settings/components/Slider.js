@@ -1,7 +1,20 @@
 import {RangeSlider, TextField} from '@shopify/polaris';
 import React from 'react';
 
-export const renderSlider = (label, key, min, max, unit, helpText, settings, onChange) => (
+/**
+ * \
+ * @param label
+ * @param key
+ * @param min
+ * @param max
+ * @param unit
+ * @param helpText
+ * @param settings
+ * @param onChange
+ * @returns {React.JSX.Element}
+ * @constructor
+ */
+export const Slider = (label, key, min, max, unit, helpText, settings, onChange) => (
   <RangeSlider
     label={label}
     value={settings[key]}

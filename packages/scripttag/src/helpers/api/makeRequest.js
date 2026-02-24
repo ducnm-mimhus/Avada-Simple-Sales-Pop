@@ -7,7 +7,7 @@
  * @param options
  * @returns {Promise<unknown>}
  */
-export default function makeRequest(url, method, data = null, options = {}) {
+export default function makeRequest({url, method, data = null, options = {}}) {
   const request = new XMLHttpRequest();
   return new Promise(function(resolve, reject) {
     request.onreadystatechange = function() {

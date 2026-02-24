@@ -312,7 +312,7 @@ export default router;
 App Proxy automatically adds `shop` query parameter. Resolve shop in controller:
 
 ```javascript
-// Helper.js function in controller
+// helper.js function in controller
 async function getShopFromQuery(ctx) {
   const shopDomain = ctx.query.shop || ctx.query.shopifyDomain;
 
