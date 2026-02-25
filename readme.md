@@ -123,9 +123,9 @@ Enable permission `Service Account Token Creator` for `user@appspot.gserviceacco
 
 **Solution**
 
-You can enable Analytics for your project from Firebase project
+You can enable Statistics for your project from Firebase project
 
-![Enable Google Analytics on your app](https://firebasestorage.googleapis.com/v0/b/avada-development.appspot.com/o/images%2Fscreenshots%2Fenable_analytics.png?alt=media&token=559669e1-65d5-4e7b-b2dd-ce82517a262e)
+![Enable Google Statistics on your app](https://firebasestorage.googleapis.com/v0/b/avada-development.appspot.com/o/images%2Fscreenshots%2Fenable_analytics.png?alt=media&token=559669e1-65d5-4e7b-b2dd-ce82517a262e)
 
 
 ## AI-Assisted Development (Claude Code)

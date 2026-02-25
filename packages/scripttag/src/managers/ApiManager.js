@@ -9,15 +9,16 @@ export default class ApiManager {
     }
   }
 
-  async recordEvent(type) {
+  async recordEvent(impressions, clicks) {
     try {
-      const url = `${this.host}/clientApi/records`;
+      const url = `${this.host}/clientApi/statistics`;
       await makeRequest({
         url: url,
         method: 'POST',
         data: {
           shopDomain: this.shopDomain,
-          type: type
+          impressions: impressions,
+          clicks: clicks
         }
       });
     } catch (e) {

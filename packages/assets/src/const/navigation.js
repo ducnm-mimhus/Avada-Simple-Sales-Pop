@@ -8,8 +8,8 @@ export const navigationLinks = [
     destination: '/settings'
   },
   {
-    label: 'Analytics',
-    destination: '/analytics'
+    label: 'Statistics',
+    destination: '/statistics'
   }
 ].map(item => ({
   ...item,

@@ -6,7 +6,7 @@ import Settings from '@assets/loadables/Settings/Settings';
 import {routePrefix} from '@assets/config/app';
 import Loading from '@assets/components/Loading';
 import Notifications from '@assets/loadables/Notifications/Notifications';
-import Analytics from '@assets/loadables/Analytics/Analytics';
+import Statistics from '@assets/loadables/Statistics/Statistics';
 
 const FullscreenPageA = React.lazy(() => import('../pages/FullscreenPageA'));
 
@@ -17,7 +17,7 @@ const Routes = ({prefix = routePrefix}) => (
       <Route exact path={prefix + '/'} component={Home} />
       <Route exact path={prefix + '/notifications'} component={Notifications} />
       <Route exact path={prefix + '/settings'} component={Settings} />
-      <Route exact path={prefix + '/analytics'} component={Analytics} />
+      <Route exact path={prefix + '/statistics'} component={Statistics} />
       <Route exact path={prefix + '/fullscreen-page-a'} component={FullscreenPageA} />
       <Route path="*" component={NotFound} />
     </Switch>

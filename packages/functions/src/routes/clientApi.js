@@ -1,6 +1,6 @@
 import Router from 'koa-router';
 import * as clientApiController from '../controllers/clientApi/clientApiController';
-import {updateRecord} from '@functions/controllers/recordController';
+import {updateStatistics} from '@functions/controllers/statisticsController';
 
 const router = new Router({
   prefix: '/clientApi'
@@ -8,6 +8,6 @@ const router = new Router({
 
 router.get('/notifications', clientApiController.getClientData);
 router.get('/health', clientApiController.health);
-router.post('/records', updateRecord);
+router.post('/statistics', updateStatistics);
 
 export default router;

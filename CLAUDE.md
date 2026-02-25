@@ -7,7 +7,7 @@ This file provides guidance to Claude Code when working with this Avada Shopify 
 - **Backend**: Node.js, Firebase Functions, Firestore
 - **Frontend**: React, Shopify Polaris v12+
 - **APIs**: Shopify GraphQL Admin API, Shopify REST API
-- **Analytics**: BigQuery
+- **Statistics**: BigQuery
 - **Extensions**: Checkout UI, Customer Account, Theme App Extensions
 
 ## Project Structure

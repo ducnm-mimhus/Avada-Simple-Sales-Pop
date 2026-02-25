@@ -98,7 +98,6 @@ export default function Settings() {
         </Layout.Section>
       </Layout>
 
-      {/* Render các Modals */}
       {saveModal}
       {undoModal}
     </Page>

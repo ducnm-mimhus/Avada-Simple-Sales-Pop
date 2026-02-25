@@ -38,7 +38,7 @@ yarn update-label
 
 ### File Naming Convention
 - Use PascalCase matching component/feature name
-- Example: `CustomerDetails.json`, `VipTiers.json`, `Analytics.json`
+- Example: `CustomerDetails.json`, `VipTiers.json`, `Statistics.json`
 
 ### Key Naming Convention
 - Use camelCase for keys

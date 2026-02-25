@@ -29,7 +29,7 @@
 - **Customer Account API** - Customer self-service
 - **Metafields/Metaobjects** - Custom data storage
 - **Webhooks** - Event-driven integrations
-- **Web Pixels** - Analytics and tracking
+- **Web Pixels** - Statistics and tracking
 - **App Bridge** - Embedded app framework
 
 ---

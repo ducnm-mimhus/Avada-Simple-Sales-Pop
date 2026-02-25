@@ -33,6 +33,7 @@
     "react-router-dom": "^5.3.3",
     "react-router-routes-loader": "^0.2.1",
     "react-screentype-hook": "^1.0.18",
+    "recharts": "^3.7.0",
     "rehype-raw": "^6.1.1",
     "remark-gfm": "^3.0.1",
     "vite": "^7.0.0",

@@ -1,7 +1,7 @@
 import React from 'react';
 import {BlockStack, Icon, InlineStack, ResourceItem, Text, Thumbnail} from '@shopify/polaris';
 import {CheckIcon} from '@shopify/polaris-icons';
-import {formatDate, timeAgo} from '@assets/pages/Notifications/utils/timeFormater';
+import {formatDate, timeAgo} from '@assets/helpers/utils/timeFormater';
 
 const NotificationItem = ({item}) => {
   const {id, firstName, city, country, productName, productImage, timestamp} = item;
